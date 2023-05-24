@@ -142,6 +142,7 @@ def Figure_recognition_page():
 def Bakery_recognition_page():
     st.title("Bakery Recognition Page")
     ### UPLOAD PART :
+    st.markdown("Utilize this model to accurately identify five types of pastries: croissant, pain au chocolat, cookie, donut, and cannele.")
     im = st.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
     if im is not None:
         im = Image.open(im)
