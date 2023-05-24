@@ -156,7 +156,7 @@ def Bakery_recognition_page():
         im = np.expand_dims(im, axis=0)
         im = im / 255.0  # Normalize pixel values to [0, 1]
         # LOAD THE MODEL :
-        model = load_model('mymodel_v2.h5', compile=False)
+        model = load_model('mymodelpower.h5', compile=False)
 
 
         # Define the class labels
