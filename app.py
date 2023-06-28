@@ -142,6 +142,7 @@ def Figure_recognition_page():
 def Bakery_recognition_page():
     st.title("Bakery Recognition Page")
     ### UPLOAD PART :
+    st.markdown("Utilize this model to accurately identify five types of pastries: croissant, pain au chocolat, cookie, donut, and cannele.")
     im = st.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
     if im is not None:
         im = Image.open(im)
@@ -156,7 +157,7 @@ def Bakery_recognition_page():
         im = np.expand_dims(im, axis=0)
         im = im / 255.0  # Normalize pixel values to [0, 1]
         # LOAD THE MODEL :
-        model = load_model('mymodel_v2.h5', compile=False)
+        model = load_model('mymodelpower.h5', compile=False)
 
 
         # Define the class labels
