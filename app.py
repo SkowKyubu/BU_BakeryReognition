@@ -9,6 +9,7 @@ from keras.models import load_model
 import cv2
 from PIL import Image
 import numpy as np
+import yolo
 
 # Page: Figure_recognition
 def Figure_recognition_page():
@@ -142,7 +143,6 @@ def Figure_recognition_page():
 def Bakery_recognition_page():
     st.title("Bakery Recognition Page")
     ### UPLOAD PART :
-    st.markdown("Utilize this model to accurately identify five types of pastries: croissant, pain au chocolat, cookie, donut, and cannele.")
     im = st.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
     if im is not None:
         im = Image.open(im)
@@ -157,7 +157,7 @@ def Bakery_recognition_page():
         im = np.expand_dims(im, axis=0)
         im = im / 255.0  # Normalize pixel values to [0, 1]
         # LOAD THE MODEL :
-        model = load_model('mymodelpower.h5', compile=False)
+        model = load_model('mymodel_v2.h5', compile=False)
 
 
         # Define the class labels
@@ -173,10 +173,36 @@ def Bakery_recognition_page():
         # Print the predicted class label
         st.markdown("### Predicted class : " + str(predicted_class_label))
 
+def Bakery_recognition_page_yolo():
+    st.title("Bakery Recognition Page With Yolo")
+    # Class names
+    classNames = ["cannele", "cookie", "croissant", "donuts", "pain_chocolat"]
+
+    # Load the model :
+    model = yolo.load_model()
+    FRAME_WINDOW = st.image([])
+    # camera = cv2.VideoCapture(0)
+    img = st.camera_input("Take a picture of the pastries you want to order : ")
+
+    if img:
+        img = Image.open(img)
+        img = np.array(img)
+        detection,img_detect = yolo.detect(img,model,True)
+        text = "You have to pay " + str(detection) + " Bath"
+        st.markdown(text)
+
+        print_box = st.checkbox('Print detection')
+
+        if print_box:
+            st.image(img_detect)
+
+
+
 # Sidebar navigation
 pages = {
     "Figure recognition": Figure_recognition_page,
     "Bakery recognition": Bakery_recognition_page,
+    "Bakery recognition with Yolo": Bakery_recognition_page_yolo
 }
 
 st.sidebar.title("Navigation")
